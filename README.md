@@ -1,4 +1,4 @@
-# SHIR-BOOT
+# SHIR-AI
 
 <div align="center">
   <p>
@@ -43,10 +43,10 @@ AI对话方面有如下功能：
 
 ### 使用
 
-1. 下载源码
-2. 执行shir-boot-mysql.sql初始化数据库
-3. 下载[前端源码](https://github.com/reinershir/Shir-Boot-Admin)并运行
-4. 确保redis是可用的
+1. 安装依赖组件：JDK17、mysql5.8、Redis
+2. 下载源码：`git clone https://github.com/reinershir/Shir-AI`
+3. 执行shir-boot-mysql.sql初始化数据库
+4. 下载[前端源码](https://github.com/reinershir/Shir-Boot-Admin)并运行
 5. 运行 `ShirBootApplication.java` 启动后台服务
 
 ### Web UI

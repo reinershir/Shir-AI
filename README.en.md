@@ -1,4 +1,4 @@
-# SHIR-BOOT
+# SHIR-AI
 
 <div align="center">
   <p>
@@ -9,6 +9,8 @@
 </div>
 AI Intelligent Conversation System, integrates common functions of the backend management system, internationalization, online code generation, AI conversation, AI development tools, etc.
 
+
+AI Intelligent Conversation System, integrates common functions of the backend management system, internationalization, online code generation, AI conversation, AI development tools, etc.
 
 AI Intelligent Conversation System, integrates common functions of the backend management system, internationalization, online code generation, AI conversation, AI development tools, etc.
 
