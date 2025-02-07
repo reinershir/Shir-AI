@@ -1,0 +1,72 @@
+version: "3.0"
+services:
+  shir:
+    image: bitnami/java:17
+    container_name: shir
+    # networks:
+    #   - networks
+    depends_on:
+      - redis
+    volumes:
+      - ./shir:/root/shir
+    ports:
+      - 8009:8009
+    environment:
+      - TZ=Asia/Shanghai
+    command: ["java", "-jar", "/root/shir/shir-boot-1.0.1.jar", "--spring.profiles.active=test"]
+  redis:
+    container_name: redis
+    image: redis:6.2
+    networks:
+      default:
+        ipv4_address: 172.19.0.3
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis/data:/data
+      - ./redis/redis.conf:/etc/redis.conf
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=en_US.UTF-8
+    restart: always
+    command: ["redis-server", "/etc/redis.conf"]
+  
+  mysql:
+    image: mysql:8.2.0
+    container_name: mysql
+    restart: always
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
+    command:
+      --max_connections=1000
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --default-authentication-plugin=mysql_native_password
+      --lower_case_table_names=1 
+    networks:
+      default:
+        ipv4_address: 172.19.0.5
+    ports:
+      - 3306:3306
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=123456
+#  nginx:
+#    container_name: nginx
+#    image: nginx:alpine
+#    ports:
+#      - 80:80
+#      - 443:443
+#    volumes:
+#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+#      - ./nginx/sites:/etc/nginx/conf.d
+#      - ./nginx/ssl:/etc/nginx/ssl
+#      - ./nginx/www:/var/www
+#      - ./nginx/wwwtest:/var/wwwtest
+#      - ./nginx/logs:/var/log/nginx
+  
+      
+networks:
+  networks:
+    external: true  #使用已有的networks

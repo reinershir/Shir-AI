@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.reinershir.ai.mapper.StatisticsMapper">
+
+	<select id="selectToday" resultType="double" >
+		SELECT COALESCE(sum(CONSUME_TOKEN),0) from CHAT_HISTORY WHERE DATE_FORMAT(CREATE_TIME, '%Y-%m-%d') = CURDATE()
+	</select>
+	
+	<select id="selectTotal" resultType="double" >
+		SELECT COALESCE(sum(CONSUME_TOKEN),0) from CHAT_HISTORY 
+	</select>
+
+	<select id="selectChatCountToday" resultType="int" >
+		SELECT count(1) from CHAT_HISTORY WHERE DATE_FORMAT(CREATE_TIME, '%Y-%m-%d') = CURDATE()
+	</select>
+</mapper>

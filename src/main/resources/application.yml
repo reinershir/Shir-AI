@@ -1,0 +1,167 @@
+server:
+  port: 8009
+  
+  
+spring: 
+  profiles:
+    active: dev
+  jackson: 
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  application:
+    name: shir-boot
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shir-boot?allowMultiQueries=true&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    #password: X..!
+    # 下面为连接池的补充设置，应用到上面所有数据源中
+    # 初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,logback
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: 
+    stat: 
+      mergeSql: true
+      slowSqlMillis: 5000
+      # 合并多个DruidDataSource的监控数据
+    #useGlobalDataSourceStat: true
+    
+  data: 
+    redis:
+      database: 0
+      host: localhost
+      port: 6379
+      # password: 
+      # 连接超时时间（毫秒）
+      timeout: 3500
+      pool:
+      # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 32
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 4
+      
+  servlet:
+    multipart:
+      max-file-size: 8MB
+      max-request-size: 8MB
+
+  #国际化  
+  messages:
+    basename: i18n/message
+    
+  # freemarker配置
+  freemarker:
+    enabled: true
+    content-type: text/html
+    charset: utf-8
+    suffix: .tpl
+    request-context-attribute: request
+    expose-request-attributes: true
+    expose-session-attributes: true
+    check-template-location: true
+    # 暴露spring提供的freemarker宏
+    expose-spring-macro-helpers: true
+    template-loader-path:
+      - classpath:/static/templates/sm/
+    settings:
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      auto_import: /spring.ftl as spring
+      
+      
+    
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: IS_DELETE  # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  typeAliasesPackage: io.github.reinershir.boot.model
+# spring boot集成mybatis的方式打印sql 
+  configuration:
+    cache: true 
+    mapUnderscoreToCamelCase: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging: 
+  level: 
+    root: INFO
+  org: 
+    springframework: 
+      web: DEBUG
+  file:
+    name: ./logs/${spring.application.name}-log.log
+
+lui-auth:
+  authrizationConfig: 
+    administratorId: 1
+    tokenSalt: shir-boot123@
+    tokenExpireTime: 10800
+  intergrateConfig: 
+    enable: true    #Automatic generation of roles and menu tables
+  securityConfig:
+    enableRequestLog: true
+    bindIp: false
+
+  
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: io.github.reinershir
+  default-flat-param-object: true
+      
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    
+thirdParty:
+  feishu:
+    appId: xxx
+    appSecret: xxx
+    encryptKey: xxx
+  wechat:
+    corpid: xxx
+    agentId: 123
+    secret: JB5z-xxx
+    token: PSoSL
+    encodingAESKey: xxx
+  dingding:
+    appId: xxx-32-xxx-a013-213123
+    agentId: 123312
+    clientId: xxx
+    clientSecret: xxx
+    robotCode: xxx
+  chatToolsService:
+    url: http://localhost:9960
+    rgaFilePath: ./file/uploads/
+    

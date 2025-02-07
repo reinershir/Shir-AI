@@ -1,0 +1,3 @@
+llama_index
+flask
+flask_cors
